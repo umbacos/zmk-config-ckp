@@ -5,8 +5,21 @@
 #include <dt-bindings/zmk/backlight.h>
 #include <dt-bindings/zmk/ext_power.h>
 
-
+ 
 / {
+
+	behaviors {
+        hm: homerow_mods {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOMEROW_MODS";
+            #binding-cells = <2>;
+            tapping-term-ms = <250>;
+            quick-tap-ms = <0>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+    };
+
 	keymap {
 		compatible = "zmk,keymap";
 
@@ -20,21 +33,51 @@
 				// ------------------------------------------------------------------------------------------------------------
 			bindings = <
 
-				&kp ESC &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &kp N6 &kp N7 &kp  N8   &kp  N9   &kp N0 &kp MINUS &kp EQUAL &kp BKSP &kp DEL
-				&kp TAB  &kp Q  &kp W  &kp E  &kp R  &kp T  &kp Y  &kp U  &kp  I    &kp  O  &kp  P   &kp LBKT &kp RBKT  	&kp BSLH &kp INS
-				&kp CLCK  &kp A  &kp S  &kp D  &kp F  &kp G  &kp H  &kp J  &kp  K    &kp  L  &kp SEMI &kp SQT           	&kp RET &kp PG_UP
-				&kp LSHFT &kp Z  &kp X  &kp C  &kp V  &kp B  &kp N  &kp M  &kp COMMA &kp DOT &kp FSLH   &kp RSHFT &kp UP &kp PG_DN
-				&kp LCTRL &kp LGUI &kp LALT            &kp SPACE                          &kp RALT  &mo 1 &kp RCTRL &kp LEFT &kp DOWN &kp RIGHT
+              &kp ESC &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp SLASH &kp LS(N0) &kp BSPC &kp DEL
+              &kp TAB &kp Q &kp W &kp E &kp R &kp T &kp Y &kp U &kp I &kp O &kp P &kp RA(LEFT_BRACKET) &kp RA(RIGHT_BRACKET) &kp GRAVE &kp INS
+              &kp CLCK &hm LCTRL A &kp S &lt 3 D &kp F &kp G &kp H &kp J &kp K &kp L &hm LCTRL LS(COMMA) &kp MINUS &mt RSHFT RET &kp PG_UP
+              &lt 1 DEL &kp Z &kp X &kp C &kp V &kp B &kp N &kp M &kp COMMA &kp DOT &kp LS(N7) &mo 1 &kp UP &kp PG_DN
+              &kp LCTRL &kp LALT &kp LGUI &lt 2 SPACE &kp RALT &mo 4 &kp RCTRL &kp LEFT &kp DOWN &kp RIGHT
 			>;
 			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
 		};
-		raise {
+		shift {
 			bindings = <
-				&kp ESC &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &kp F6 &kp F7 &kp  F8   &kp  F9   &kp F10  &kp F11 &kp F12 &bl BL_TOG &rgb_ug RGB_TOG
-				&trans &trans &kp UP &trans &trans &trans &trans &trans &kp INS &trans &kp PSCRN &kp SLCK &kp PAUSE_BREAK &reset &rgb_ug RGB_HUI
-				&trans    &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans &trans &trans &kp HOME  &kp PG_UP   &bootloader &rgb_ug RGB_HUD
-				&kp C_PREV &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &trans &trans &trans &trans &trans &kp END &kp PG_DN  &kp C_NEXT &trans &bl BL_INC
-				&bt BT_PRV &bt BT_NXT  &trans              &trans                            &trans   &trans   &trans &bt BT_CLR &trans &bl BL_DEC
+              &kp ESC &kp LS(N1) &kp RA(SEMICOLON) &kp RA(SINGLE_QUOTE) &kp LS(N4) &kp LS(N5) &kp LS(EQUAL) &kp LS(N6) &kp LS(RIGHT_BRACKET) &kp LS(N8) &kp LS(N9) &kp LS(SLASH) &kp RIGHT_BRACKET &kp LS(BSPC) &kp LS(DEL)
+              &kp LS(TAB) &kp LS(Q) &kp LS(W) &kp LS(E) &kp LS(R) &kp LS(T) &kp LS(Y) &kp LS(U) &kp LS(I) &kp LS(O) &kp LS(P) &kp RA(LS(LEFT_BRACKET)) &kp RA(LS(RIGHT_BRACKET)) &kp TILDE &kp INS
+              &kp CLCK &kp LS(A) &kp LS(S) &kp LS(D) &kp LS(F) &kp LS(G) &kp LS(H) &kp LS(J) &kp LS(K) &kp LS(L) &kp LS(DOT) &kp LS(N2) &mt RSHFT LS(RET) &kp LS(PG_UP)
+              &kp LSHFT &kp LS(Z) &kp LS(X) &kp LS(C) &kp LS(V) &kp LS(B) &kp LS(N) &kp LS(M) &kp GRAVE &kp LS(GRAVE) &kp LS(MINUS) &kp RSHFT &kp LS(UP) &kp LS(PG_DN)
+              &kp LS(LCTRL) &kp LS(LALT) &kp LS(LGUI) &lt 2 LS(SPACE) &kp LS(RALT) &mo 3 &kp LS(RCTRL) &kp LS(LEFT) &kp LS(DOWN) &kp LS(RIGHT)
+			>;
+			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+		};
+		accent {
+			bindings = <
+              &trans &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &kp F6 &kp F7 &kp F8 &kp F9 &kp F10 &kp F11 &kp F12 &trans &trans
+              &trans &kp RA(E) &trans &kp LEFT_BRACKET &trans &trans &trans &kp BACKSLASH &kp EQUAL &kp SEMICOLON &trans &trans &trans &trans &trans
+              &trans &kp SINGLE_QUOTE &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+              &kp LSHFT &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &kp RSHFT &trans &trans
+              &kp LCTRL &kp LALT &kp LGUI &kp SPACE &kp RALT &mo 3 &kp RCTRL &kp LEFT &kp DOWN &kp RIGHT
+			>;
+			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+		};
+		navigation {
+			bindings = <
+              &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+              &trans &trans &trans &trans &trans &trans &trans &trans &kp UP &trans &trans &trans &trans &trans &trans
+              &trans &trans &trans &trans &kp LSHFT &trans &trans &kp LEFT &kp DOWN &kp RIGHT &trans &trans &trans &trans 
+              &trans &trans &trans &kp LC(C) &kp LC(V) &trans &trans &trans &trans &trans &trans &trans &trans &trans
+              &trans &trans &trans &kp BSPC &trans &trans &trans &trans &trans &trans
+			>;
+			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+		};
+		service {
+			bindings = <
+              &bootloader &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &kp F5 &kp F6 &kp F7 &kp F8 &kp F9 &kp F10 &kp F11 &kp F12 &bt BT_CLR &rgb_ug RGB_TOG
+              &rgb_ug RGB_TOG &rgb_ug RGB_EFR &rgb_ug RGB_HUI &rgb_ug RGB_SAI &rgb_ug RGB_BRI &rgb_ug RGB_SPI &trans &trans &kp INS &trans &kp PSCRN &kp SLCK &kp PAUSE_BREAK &sys_reset &rgb_ug RGB_HUI
+              &trans &rgb_ug RGB_EFF &rgb_ug RGB_HUD &rgb_ug RGB_SAD &rgb_ug RGB_BRD &rgb_ug RGB_SPD &trans &trans &trans &trans &kp HOME &kp PG_UP &bootloader &rgb_ug RGB_HUD
+              &trans &bl BL_TOG &bl BL_CYCLE &bl BL_INC &bl BL_DEC &trans &trans &trans &trans &trans &kp END &kp PG_DN &kp C_NEXT &rgb_ug RGB_EFR
+              &bl BL_INC &bt BT_PRV &bt BT_NXT &trans &trans &trans &trans &trans &bt BT_CLR &trans &bl BL_DEC
 			>;
 			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
 		};
